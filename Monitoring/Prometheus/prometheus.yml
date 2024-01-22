@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'tigergraph_Primary'
+#    scheme: https  # Enforce HTTPS
+    static_configs:
+      - targets: ['test:14240']
+#      - targets: ['test.i.tgcloud.io:443']
+    metrics_path: /informant/metrics
+    
+scrape_configs:
+  - job_name: 'tigergraph_CRR'
+#    scheme: https  # Enforce HTTPS
+    static_configs:
+      - targets: ['test:14240']
+#      - targets: ['test.i.tgcloud.io:443']
+    metrics_path: /informant/metrics
+
+
+rule_files:
+  - "tigergraph_alerts.yml"
+
+#alert manager not needed unless using for alerts
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093

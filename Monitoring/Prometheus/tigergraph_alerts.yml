@@ -1,0 +1,146 @@
+groups:
+- name: tigergraph_alerts
+  rules:
+  - alert: HighCPUUsageCritical
+    expr: |
+      tigergraph_cpu_usage{service_name=""} > 90
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "High CPU Usage Detected (Critical)"
+      description: |
+        CPU usage on host is critically high ({{ $value }}%).
+
+  - alert: HighCPUUsageWarning
+    expr: |
+      tigergraph_cpu_usage{service_name=""} > 70
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "High CPU Usage Detected (Warning)"
+      description: |
+        CPU usage on host is high ({{ $value }}%).
+
+  - alert: HighMemoryUsageCritical
+    expr: |
+      tigergraph_memory_usage{service_name=""} > 90
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "High Memory Usage Detected (Critical)"
+      description: |
+        Memory usage on host is critically high ({{ $value }} MB).
+
+  - alert: HighMemoryUsageWarning
+    expr: |
+      tigergraph_memory_usage{service_name=""} > 70
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Memory Usage Detected (Warning)"
+      description: |
+        Memory usage on host is high ({{ $value }} MB).
+
+  - alert: HighNetworkConnections
+    expr: tigergraph_network_connections{service_name=""} > 1000
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Network Connections Detected"
+      description: "Number of open TCP connections on host is high ({{ $value }})"
+
+  - alert: HighNetworkTraffic
+    expr: tigergraph_network_traffic{direction="incoming", service_name=""} > 1e9 or
+          tigergraph_network_traffic{direction="outgoing", service_name=""} > 1e9
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Network Traffic Detected"
+      description: "Network traffic on host is high"
+
+  - alert: ServiceStatusUnknown
+    expr: tigergraph_service_status{} == 3
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service Status Unknown Detected"
+      description: "Service on host has an unknown status"
+
+  - alert: ServiceOnline
+    expr: tigergraph_service_status{} == 6
+    for: 5s
+    labels:
+      severity: info
+    annotations:
+      summary: "Service Online Detected"
+      description: "Service on host is online"
+
+  - alert: ServiceWarmup
+    expr: tigergraph_service_status{} == 9
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Service Warmup Detected"
+      description: "Service on host is in warm-up state"
+
+  - alert: ServiceReadonly
+    expr: tigergraph_service_status{} == 12
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Service Readonly Detected"
+      description: "Service on host is in readonly state"
+
+  - alert: ServiceStarting
+    expr: tigergraph_service_status{} == 15
+    for: 5s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Service Starting Detected"
+      description: "Service on host is starting"
+
+  - alert: ServicePaused
+    expr: tigergraph_service_status{} == 18
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service Paused Detected"
+      description: "Service on host is paused"
+
+  - alert: ServiceStopping
+    expr: tigergraph_service_status{} == 21
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service Stopping Detected"
+      description: "Service on host is stopping"
+
+  - alert: ServiceOffline
+    expr: tigergraph_service_status{} == 24
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service Offline Detected"
+      description: "Service on host is offline"
+
+  - alert: ServiceDown
+    expr: tigergraph_service_status{} == 27
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service Down Detected"
+      description: "Service on host is down"

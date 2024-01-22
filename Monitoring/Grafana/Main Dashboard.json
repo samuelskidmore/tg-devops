@@ -1,0 +1,3866 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "PRIMARY",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 10,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 40,
+        "options": {
+          "alertInstanceLabelFilter": "{severity=\"critical\"}",
+          "alertName": "",
+          "dashboardAlerts": false,
+          "datasource": "Prometheus",
+          "groupBy": [],
+          "groupMode": "default",
+          "maxItems": 20,
+          "sortOrder": 1,
+          "stateFilter": {
+            "error": true,
+            "firing": true,
+            "noData": false,
+            "normal": false,
+            "pending": true
+          },
+          "viewMode": "list"
+        },
+        "title": "Critical Alerts",
+        "type": "alertlist"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 7
+        },
+        "id": 58,
+        "panels": [],
+        "title": "CPU and DISK",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "This detects the rate of change in disk space usage on host m1 over the past 2 hours.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "decmbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 54,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "deriv(tigergraph_diskspace_usage{host_id=\"m1\"}[2h])\n",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "M1 Disk Space Usage Change Rate:",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "This query computes the average memory usage for each active service (excluding the total node usage).",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "decmbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 55,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "avg(tigergraph_memory_usage{service_name!=\"\"}) by (service_name)\n",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Average Memory Usage for Active Services",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "This query calculates the per-second rate of incoming network traffic for host m1 over the past hour.\n",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        },
+        "id": 41,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "rate(tigergraph_network_traffic{direction=\"incoming\", host_id=\"m1\"}[1h])\n",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "M1 Network Traffic Rate Over Time per-second over past hour:",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "Set Threshold below based on you server actual memory side ie 90% percent of 8gb is 7.2gb in MB is 7200mb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 7200
+                }
+              ]
+            },
+            "unit": "decmbytes"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_memory_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M1 Overall TG RAM Usage"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_memory_usage\", host_id=\"m2\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M2 Overall TG RAM Usage"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        },
+        "id": 34,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_memory_usage{}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "TG Cluster RAM Usage in MB",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Overall TG CPU Usage"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", service_name=\"ADMIN\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M1 Admin CPU"
+                }
+              ]
+            },
+            {
+              "__systemRef": "hideSeriesFrom",
+              "matcher": {
+                "id": "byNames",
+                "options": {
+                  "mode": "exclude",
+                  "names": [
+                    "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"34.42.38.67:14240\", job=\"tigergraph\"}"
+                  ],
+                  "prefix": "All except:",
+                  "readOnly": true
+                }
+              },
+              "properties": [
+                {
+                  "id": "custom.hideFrom",
+                  "value": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 24
+        },
+        "id": 33,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_cpu_usage{}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Cluster CPU Usage %",
+        "type": "timeseries"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 32
+        },
+        "id": 29,
+        "panels": [],
+        "title": "Overall System Health",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 33
+        },
+        "id": 38,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "tigergraph_cpu_usage{service_name=\"\"}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "CPU PER NODE",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 10000
+                }
+              ]
+            },
+            "unit": "decmbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 33
+        },
+        "id": 39,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "tigergraph_memory_usage{service_name=\"\"}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "RAM PER NODE",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 41
+        },
+        "id": 32,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "# Disk Space of TG",
+          "mode": "markdown"
+        },
+        "pluginVersion": "10.1.2",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 65
+                },
+                {
+                  "color": "orange",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 100
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 43
+        },
+        "id": 30,
+        "options": {
+          "displayMode": "lcd",
+          "minVizHeight": 15,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "text": {
+            "titleSize": 13
+          },
+          "valueMode": "color"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "(tigergraph_diskspace_usage{host_id=~\"m1\"}) / (tigergraph_diskspace_free{host_id=~\"m1\"} + tigergraph_diskspace_usage{host_id=~\"m1\"}) * 100\n",
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "M1 - Usage Capacity",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 51
+        },
+        "id": 59,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "# Network Stats of TG",
+          "mode": "markdown"
+        },
+        "pluginVersion": "10.1.2",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Overall TG CPU Usage"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", service_name=\"ADMIN\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M1 Admin CPU"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 53
+        },
+        "id": 36,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_network_traffic{direction=\"incoming\"}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Cluster Network Traffic Incoming",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Overall TG CPU Usage"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_cpu_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", service_name=\"ADMIN\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M1 Admin CPU"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 53
+        },
+        "id": 37,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "{direction=\"outgoing\"}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Cluster Network Traffic Outgoing",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "Set Threshold below based on you server actual memory side ie 90% percent of 8gb is 7.2gb in MB is 7200mb",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 7200
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_memory_usage\", host_id=\"m1\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M1 Overall TG RAM Usage"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_memory_usage\", host_id=\"m2\", instance=\"35.188.208.85:14240\", job=\"tigergraph\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "M2 Overall TG RAM Usage"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 53
+        },
+        "id": 35,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "width": 300
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_network_connections{}",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "TG Cluster Network Connections",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "This shows the peak queries per second for specified endpoints over the last day.\n\n",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 61
+        },
+        "id": 57,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "max_over_time(tigergraph_qps{endpoint=~\"POST /restppkafkaloader/{graph_name}|GET /endpoints/{graph_name}\"}[1d])\n",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Peak QPS (Queries Per Second) for Specific Endpoints:",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "This query calculates the total number of requests in the RESTPP service where the maximum latency exceeded 1000 ms. It sums up the instances where the latency, as measured by the max_latency statistic, is greater than 1000 milliseconds across all endpoints.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "index": 0,
+                    "text": "None"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 61
+        },
+        "id": 56,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+            },
+            "editorMode": "code",
+            "expr": "sum(tigergraph_endpoint_latency{statistic=\"max_latency\", service_name=\"RESTPP\", endpoint=~\".*\"} > 1000)\n",
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Total Number of Requests with High Latency over 1000 milliseconds ",
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 69
+        },
+        "id": 28,
+        "panels": [],
+        "title": "Service Status",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "gridPos": {
+          "h": 2,
+          "w": 24,
+          "x": 0,
+          "y": 70
+        },
+        "id": 60,
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "# Service Status of TG",
+          "mode": "markdown"
+        },
+        "pluginVersion": "10.1.2",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 72
+        },
+        "id": 3,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"GPE\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GPE STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 12,
+          "y": 72
+        },
+        "id": 53,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"GPE\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GPE STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 77
+        },
+        "id": 43,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"GSE\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GSE STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 82
+        },
+        "id": 42,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"KAFKA\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "Kafka STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 87
+        },
+        "id": 44,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"GSQL\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GSQL STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 92
+        },
+        "id": 45,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"GUI\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GUI STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 97
+        },
+        "id": 46,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"ETCD\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "ETCD STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 102
+        },
+        "id": 47,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"NGINX\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "NGINX STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 107
+        },
+        "id": 51,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"RESTPP\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "RESTPP STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "ZK status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 112
+        },
+        "id": 48,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"ZK\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "GPE STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 117
+        },
+        "id": 50,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"DICT\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "DICT STATUS Primary",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dcc6d4bf-42aa-46eb-b693-b339ff03514f"
+        },
+        "description": "GPE status on Prod Pimary cluster",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "DOWN"
+                  },
+                  "6": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "ONLINE"
+                  },
+                  "9": {
+                    "color": "orange",
+                    "index": 3,
+                    "text": "WarmUp"
+                  }
+                },
+                "type": "value"
+              },
+              {
+                "options": {
+                  "match": "null+nan",
+                  "result": {
+                    "color": "dark-yellow",
+                    "index": 2,
+                    "text": "NO RESPONSE"
+                  }
+                },
+                "type": "special"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0
+                },
+                {
+                  "color": "dark-green",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"1\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE1"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"2\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE2"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_service_status\", instance=\"35.188.208.85:14240\", job=\"tigergraph\", partition=\"3\", replica=\"1\", service_name=\"GPE\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE3"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"2\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE4"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE5"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"3\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE6"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"1\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE7"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "{__name__=\"tigergraph_gpe_status\", instance=\"127.0.0.1:9099\", job=\"perf_tg_agent\", partition=\"4\", replica=\"2\"}"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "GPE_NODE8"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 122
+        },
+        "id": 49,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {
+            "titleSize": 12,
+            "valueSize": 24
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "ac7a084b-dc6a-47c8-a476-a08a33bf10d0"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "tigergraph_service_status{service_name=\"CTRL\"}",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "__auto",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "CTRL STATUS Primary",
+        "type": "stat"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-2d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "New PROD_DASHBOARD",
+    "uid": "tzlsI43nk1",
+    "version": 59,
+    "weekStart": ""
+  }
