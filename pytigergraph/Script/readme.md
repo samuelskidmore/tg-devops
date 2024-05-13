@@ -1,6 +1,5 @@
 README.md
-markdown
-Copy code
+
 # Jupyter Notebook with pyTigerGraph
 
 This project provides a Docker setup for running a Jupyter Notebook server that includes the `pyTigerGraph` library for interacting with TigerGraph databases.
@@ -15,19 +14,17 @@ This project provides a Docker setup for running a Jupyter Notebook server that 
 
 Before building your Docker image, you need to pull the base image from Docker Hub:
 
-```bash
+
 docker pull jupyter/base-notebook
+
 Building the Docker Image
 To build the Docker image, navigate to the directory containing your Dockerfile and run the following command:
 
-bash
-Copy code
+
 docker build -t jupyter-pytigergraph .
 Running the Docker Container
 After the image has been built, you can start a container using:
 
-bash
-Copy code
 docker run -p 8888:8888 jupyter-pytigergraph
 This command maps port 8888 of the container to port 8888 on your host. You can access the Jupyter Notebook by visiting http://localhost:8888 in your web browser.
 
