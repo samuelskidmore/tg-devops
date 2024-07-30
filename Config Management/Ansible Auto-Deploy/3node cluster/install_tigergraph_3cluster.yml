@@ -1,0 +1,111 @@
+- hosts: tigergraph_servers
+  become: yes
+  tasks:
+    - name: Update and upgrade apt packages
+      become: yes
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install prerequisites for CentOS/RedHat
+      yum:
+        name:
+          - tar
+          - curl
+          - cronie
+          - iproute
+          - util-linux-ng
+          - net-tools
+          - nc
+          - coreutils
+          - openssh-clients
+          - openssh-server
+          - sshpass
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install prerequisites for Ubuntu/Debian
+      apt:
+        name:
+          - tar
+          - curl
+          - cron
+          - iproute2
+          - util-linux
+          - net-tools
+          - netcat
+          - coreutils
+          - openssh-client
+          - openssh-server
+          - sshpass
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install basic applications
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - vim
+        - htop
+        - nano
+        - git
+      when: ansible_os_family == "Debian"
+
+    - name: Install basic applications
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - vim-enhanced
+        - htop
+        - nano
+        - git
+      when: ansible_os_family == "RedHat"
+
+    - name: Download TigerGraph installer
+      get_url:
+        url: "tigergraph-3.10.0-offline.tar.gz"
+        dest: /home/graphsql/tigergraphansible.tar.gz
+        mode: '0440'
+      when: inventory_hostname == groups['tigergraph_servers'][0]
+
+    - name: Extract TigerGraph installer
+      unarchive:
+        src: /home/graphsql/tigergraphansible.tar.gz
+        dest: /home/graphsql/
+        remote_src: yes
+      when: inventory_hostname == groups['tigergraph_servers'][0]
+
+    - name: Find TigerGraph installation directory
+      find:
+        paths: "/home/graphsql"
+        file_type: directory
+        patterns: "tigergraph-*"
+      register: tg_dir
+      when: inventory_hostname == groups['tigergraph_servers'][0]
+
+    - name: Copy custom install_conf.json to TigerGraph installation directory
+      copy:
+        src: ./install_conf.json
+        dest: "{{ tg_dir.files[0].path }}/install_conf.json"
+      when: inventory_hostname == groups['tigergraph_servers'][0]
+
+
+    - name: Run TigerGraph installer non-interactively
+      shell: |
+        cd {{ tg_dir.files[0].path }}
+        sudo ./install.sh -n
+      args:
+        creates: "{{ tg_dir.files[0].path }}/tgdb/conf/tgdb.conf"
+      when: ansible_play_hosts[0] == inventory_hostname
+
+    - name: Cleanup installation files
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /home/graphsql/tigergraphansible.tar.gz
+        - "{{ tg_dir.files[0].path }}"
+      when: ansible_play_hosts[0] == inventory_hostname
