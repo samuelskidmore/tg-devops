@@ -1,0 +1,99 @@
+version: '3.8'
+services:
+  tigergraph_3_6:
+    image: tigergraph/tigergraph:3.6
+    container_name: tigergraph_3_6
+    ports:
+      - "14026:22"
+      - "9001:9000"
+      - "14241:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg36:/home/tigergraph/mydata
+      - tg-data-36:/home/tigergraph
+
+  tigergraph_3_7:
+    image: tigergraph/tigergraph:3.7
+    container_name: tigergraph_3_7
+    ports:
+      - "14027:22"
+      - "9002:9000"
+      - "14242:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg37:/home/tigergraph/mydata
+      - tg-data-37:/home/tigergraph
+
+  tigergraph_3_8:
+    image: tigergraph/tigergraph:3.8
+    container_name: tigergraph_3_8
+    ports:
+      - "14028:22"
+      - "9003:9000"
+      - "14243:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg38:/home/tigergraph/mydata
+      - tg-data-38:/home/tigergraph
+
+  tigergraph_3_9:
+    image: tigergraph/tigergraph:3.9
+    container_name: tigergraph_3_9
+    ports:
+      - "14029:22"
+      - "9004:9000"
+      - "14244:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg39:/home/tigergraph/mydata
+      - tg-data-39:/home/tigergraph
+
+  tigergraph_3_10:
+    image: tigergraph/tigergraph:3.10
+    container_name: tigergraph_3_10
+    ports:
+      - "14030:22"
+      - "9005:9000"
+      - "14245:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg310:/home/tigergraph/mydata
+      - tg-data-310:/home/tigergraph
+
+  tigergraph_4_1:
+    image: tigergraph/tigergraph:4.1
+    container_name: tigergraph_4_1
+    ports:
+      - "14031:22"
+      - "9006:9000"
+      - "14246:14240"
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    volumes:
+      - ~/data/tg41:/home/tigergraph/mydata
+      - tg-data-41:/home/tigergraph
+
+volumes:
+  tg-data-36:
+  tg-data-37:
+  tg-data-38:
+  tg-data-39:
+  tg-data-310:
+  tg-data-41:
