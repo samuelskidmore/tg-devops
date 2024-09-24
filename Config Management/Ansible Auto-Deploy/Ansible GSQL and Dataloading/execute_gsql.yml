@@ -1,0 +1,16 @@
+---
+- name: Transfer GSQL file to server
+  copy:
+    src: "{{ gsql_file }}"
+    dest: "/tmp/{{ gsql_file | basename }}"
+
+- name: Run GSQL script
+  become: yes
+  become_user: tigergraph
+  shell: |
+    gsql /tmp/{{ gsql_file | basename }}
+  register: gsql_output
+
+- name: Output GSQL script execution result
+  debug:
+    msg: "{{ gsql_output.stdout }}"

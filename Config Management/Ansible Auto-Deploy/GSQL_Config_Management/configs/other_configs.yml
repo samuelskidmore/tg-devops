@@ -1,0 +1,7 @@
+other_configs:
+  - name: Admin.BasicConfig.LogConfig.LogFileMaxDurationDay
+    value: 50
+  - name: Admin.BasicConfig.LogConfig.LogFileMaxSizeMB
+    value: 100
+  - name: RESTPP.Factory.DefaultQueryTimeoutSec
+    value: 50000

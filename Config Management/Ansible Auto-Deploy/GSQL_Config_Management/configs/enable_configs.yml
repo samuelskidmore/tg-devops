@@ -1,0 +1,15 @@
+enable_configs:
+  - name: GSQL.UDF.EnablePutExpr
+    value: "true"
+  - name: RESTPP.Factory.EnableAuth
+    value: "false"
+  - name: GSQL.UDF.EnablePutTgExpr
+    value: "true"
+  - name: GSQL.UDF.EnablePutTokenBank
+    value: "true"
+  - name: GSQL.UDF.Policy.Enable
+    value: "false"
+
+
+
+

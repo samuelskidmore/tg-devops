@@ -1,0 +1,21 @@
+---
+- name: Transfer data file to server
+  copy:
+    src: "{{ csv_file }}"
+    dest: "/home/tigergraph/tmp/{{ csv_file | basename }}"
+
+- name: Load data into TigerGraph
+  become: yes
+  become_user: tigergraph
+  shell: |
+    gsql -g social_net 'RUN LOADING JOB load_job_name USING file_path="/home/tigergraph/tmp/{{ csv_file | basename }}"'
+  register: load_result
+
+- name: Output load result
+  debug:
+    msg: "{{ load_result.stdout }}"
+
+- name: Confirm data load
+  debug:
+    msg: "Data loaded successfully for {{ csv_file | basename }}"
+  when: "'Successfully' in load_result.stdout"

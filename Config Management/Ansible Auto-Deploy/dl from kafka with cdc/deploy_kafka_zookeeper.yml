@@ -1,0 +1,62 @@
+---
+- hosts: kafka_servers
+  become: true
+  vars:
+    kafka_version: '3.0.0'
+    kafka_install_dir: '/opt/kafka'
+    kafka_data_dir: '/var/lib/kafka'
+    zookeeper_data_dir: '/var/lib/zookeeper'
+    kafka_port: 9092
+    zookeeper_port: 2181
+
+  tasks:
+    - name: Install Java (required for Kafka and Zookeeper)
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: Download Kafka
+      get_url:
+        url: "https://downloads.apache.org/kafka/{{ kafka_version }}/kafka_2.13-{{ kafka_version }}.tgz"
+        dest: "/tmp/kafka.tgz"
+
+    - name: Extract Kafka
+      unarchive:
+        src: "/tmp/kafka.tgz"
+        dest: "{{ kafka_install_dir }}"
+        remote_src: true
+        creates: "{{ kafka_install_dir }}/kafka_2.13-{{ kafka_version }}"
+
+    - name: Create Kafka and Zookeeper data directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ kafka_data_dir }}"
+        - "{{ zookeeper_data_dir }}"
+
+    - name: Configure Zookeeper
+      copy:
+        dest: "{{ kafka_install_dir }}/config/zookeeper.properties"
+        content: |
+          dataDir={{ zookeeper_data_dir }}
+          clientPort={{ zookeeper_port }}
+
+    - name: Configure Kafka
+      copy:
+        dest: "{{ kafka_install_dir }}/config/server.properties"
+        content: |
+          broker.id=0
+          listeners=PLAINTEXT://:{{ kafka_port }}
+          log.dirs={{ kafka_data_dir }}
+          zookeeper.connect=localhost:{{ zookeeper_port }}
+
+    - name: Start Zookeeper
+      shell: "{{ kafka_install_dir }}/bin/zookeeper-server-start.sh -daemon {{ kafka_install_dir }}/config/zookeeper.properties"
+      args:
+        chdir: "{{ kafka_install_dir }}"
+
+    - name: Start Kafka
+      shell: "{{ kafka_install_dir }}/bin/kafka-server-start.sh -daemon {{ kafka_install_dir }}/config/server.properties"
+      args:
+        chdir: "{{ kafka_install_dir }}"

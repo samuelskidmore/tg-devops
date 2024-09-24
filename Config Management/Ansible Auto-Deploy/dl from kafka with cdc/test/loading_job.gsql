@@ -1,0 +1,79 @@
+# 1. Use graph
+USE GRAPH AntiFraud
+
+# 2. Create loading job
+SET sys.data_root="mock_data"
+CREATE LOADING JOB loading_job FOR GRAPH AntiFraud {
+    DEFINE FILENAME file_individual="$sys.data_root/Individual_vertices.csv";
+    LOAD file_individual TO VERTEX Individual VALUES($0, $1, $2, $3, $4, $5) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_company="$sys.data_root/Company_vertices.csv";
+    LOAD file_company TO VERTEX Company VALUES($0, $1, $2, $3) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_beneficialowner="$sys.data_root/BeneficialOwner_vertices.csv";
+    LOAD file_beneficialowner TO VERTEX BeneficialOwner VALUES($0, $1, $2, $3) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_merchant="$sys.data_root/Merchant_vertices.csv";
+    LOAD file_merchant TO VERTEX Merchant VALUES($0, $1, $2) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_account="$sys.data_root/Account_vertices.csv";
+    LOAD file_account TO VERTEX Account VALUES($0, $1, $2, $3, $4, $5, $6) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_bank="$sys.data_root/Bank_vertices.csv";
+    LOAD file_bank TO VERTEX Bank VALUES($0, $1, $2, $3) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_sar="$sys.data_root/SAR_vertices.csv";
+    LOAD file_sar TO VERTEX SAR VALUES($0, $1, $2) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_creditcard="$sys.data_root/CreditCard_vertices.csv";
+    LOAD file_creditcard TO VERTEX CreditCard VALUES($0, $1, $2) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_debitcard="$sys.data_root/DebitCard_vertices.csv";
+    LOAD file_debitcard TO VERTEX DebitCard VALUES($0, $1, $2) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_transaction="$sys.data_root/Transaction_vertices.csv";
+    LOAD file_transaction TO VERTEX Transaction VALUES($0, $1, $2, $3) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_acct_has_bank="$sys.data_root/ACCT_HAS_BANK_edges.csv";
+    LOAD file_acct_has_bank TO EDGE ACCT_HAS_BANK VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_cust_has_acct="$sys.data_root/CUST_HAS_ACCT_edges.csv";
+    LOAD file_cust_has_acct TO EDGE CUST_HAS_ACCT VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_merchatn_has_acct="$sys.data_root/MERCHATN_HAS_ACCT_edges.csv";
+    LOAD file_merchatn_has_acct TO EDGE MERCHATN_HAS_ACCT VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_bo_has_acct="$sys.data_root/BO_HAS_ACCT_edges.csv";
+    LOAD file_bo_has_acct TO EDGE BO_HAS_ACCT VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_name="$sys.data_root/HAS_NAME_edges.csv";
+    LOAD file_has_name TO EDGE HAS_NAME VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_dob="$sys.data_root/HAS_DOB_edges.csv";
+    LOAD file_has_dob TO EDGE HAS_DOB VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_phone="$sys.data_root/HAS_PHONE_edges.csv";
+    LOAD file_has_phone TO EDGE HAS_PHONE VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_email="$sys.data_root/HAS_EMAIL_edges.csv";
+    LOAD file_has_email TO EDGE HAS_EMAIL VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_ssn="$sys.data_root/HAS_SSN_edges.csv";
+    LOAD file_has_ssn TO EDGE HAS_SSN VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_has_address="$sys.data_root/HAS_ADDRESS_edges.csv";
+    LOAD file_has_address TO EDGE HAS_ADDRESS VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_acct_uses_ip="$sys.data_root/ACCT_USES_IP_edges.csv";
+    LOAD file_acct_uses_ip TO EDGE ACCT_USES_IP VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_acct_uses_dev="$sys.data_root/ACCT_USES_DEV_edges.csv";
+    LOAD file_acct_uses_dev TO EDGE ACCT_USES_DEV VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_acct_has_card="$sys.data_root/ACCT_HAS_CARD_edges.csv";
+    LOAD file_acct_has_card TO EDGE ACCT_HAS_CARD VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_tx_has_channel="$sys.data_root/TX_HAS_CHANNEL_edges.csv";
+    LOAD file_tx_has_channel TO EDGE TX_HAS_CHANNEL VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_send="$sys.data_root/SEND_edges.csv";
+    LOAD file_send TO EDGE SEND VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_receive="$sys.data_root/RECEIVE_edges.csv";
+    LOAD file_receive TO EDGE RECEIVE VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_tx_has_merchant="$sys.data_root/TX_HAS_MERCHANT_edges.csv";
+    LOAD file_tx_has_merchant TO EDGE TX_HAS_MERCHANT VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_tx_use_card="$sys.data_root/TX_USE_CARD_edges.csv";
+    LOAD file_tx_use_card TO EDGE TX_USE_CARD VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_card_receive="$sys.data_root/CARD_RECEIVE_edges.csv";
+    LOAD file_card_receive TO EDGE CARD_RECEIVE VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_account_has_incident="$sys.data_root/Account_HAS_INCIDENT_edges.csv";
+    LOAD file_account_has_incident TO EDGE Account_HAS_INCIDENT VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_acct_has_address="$sys.data_root/ACCT_HAS_Address_edges.csv";
+    LOAD file_acct_has_address TO EDGE ACCT_HAS_Address VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_is_located_in="$sys.data_root/IS_LOCATED_IN_edges.csv";
+    LOAD file_is_located_in TO EDGE IS_LOCATED_IN VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+    DEFINE FILENAME file_cust_has_community="$sys.data_root/CUST_HAS_COMMUNITY_edges.csv";
+    LOAD file_cust_has_community TO EDGE CUST_HAS_COMMUNITY VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+}
+
+# 3. Run loading job
+RUN LOADING JOB loading_job
+
+# 4. Drop loading job
+DROP JOB loading_job

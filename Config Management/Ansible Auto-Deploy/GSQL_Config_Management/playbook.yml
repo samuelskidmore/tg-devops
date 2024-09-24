@@ -1,0 +1,57 @@
+---
+- name: Configure TigerGraph
+  hosts: tigergraph
+  become: yes
+  become_user: tigergraph
+  vars_files:
+    - configs/enable_configs.yml
+    - configs/other_configs.yml
+
+  tasks:
+    - name: Debug PATH
+      shell: echo $PATH
+      register: path_output
+
+    - debug:
+        var: path_output.stdout
+
+    - name: Check and set enable configurations
+      shell: |
+        export PATH=$PATH:/home/tigergraph/tigergraph/app/cmd
+        current_value=$(gadmin config get {{ item.name }})
+        if [ "$current_value" != "{{ item.value }}" ]; then
+          gadmin config set {{ item.name }} {{ item.value }}
+          echo 'changed'
+        else
+          echo 'no change'
+        fi
+      with_items: "{{ enable_configs }}"
+      register: set_enable_configs
+      changed_when: "'changed' in set_enable_configs.stdout_lines"
+
+    - name: Check and set other configurations
+      shell: |
+        export PATH=$PATH:/home/tigergraph/tigergraph/app/cmd
+        current_value=$(gadmin config get {{ item.name }})
+        if [ "$current_value" != "{{ item.value }}" ]; then
+          gadmin config set {{ item.name }} {{ item.value }}
+          echo 'changed'
+        else
+          echo 'no change'
+        fi
+      with_items: "{{ other_configs }}"
+      register: set_other_configs
+      changed_when: "'changed' in set_other_configs.stdout_lines"
+
+    - name: Apply configuration changes if needed
+      shell: |
+        export PATH=$PATH:/home/tigergraph/tigergraph/app/cmd
+        echo 'y' | gadmin config apply
+      when: set_enable_configs.changed or set_other_configs.changed
+      register: apply_configs
+
+    - name: Restart services if configuration was applied
+      shell: |
+        export PATH=$PATH:/home/tigergraph/tigergraph/app/cmd
+        gadmin restart all -y
+      when: apply_configs.changed

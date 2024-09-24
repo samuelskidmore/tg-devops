@@ -1,0 +1,20 @@
+---
+- hosts: tigergraph_servers
+  become: true
+  become_user: tigergraph
+  become_method: sudo
+  tasks:
+    - name: Setup TigerGraph
+      include_tasks: setup_tigergraph.yml
+
+    - name: Execute each GSQL script
+      include_tasks: execute_gsql.yml
+      loop: "{{ lookup('fileglob', 'gsql_scripts/*.gsql', wantlist=true) }}"
+      loop_control:
+        loop_var: gsql_file
+
+    - name: Load data from each CSV file
+      include_tasks: load_data.yml
+      loop: "{{ lookup('fileglob', 'data_files/*.csv', wantlist=true) }}"
+      loop_control:
+        loop_var: csv_file
