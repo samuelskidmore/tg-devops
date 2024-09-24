@@ -19,7 +19,7 @@
       "License": "",
       "[comment]":"You can add more nodes by string 'node_id: IP', appending to the following json array. Otherwise, it installs single node locally by default.",
       "NodeList": [
-        "m1: 10.128.15.204", "m2: 10.128.15.206", "m3: 10.128.15.209"
+        "m1: hostname", "m2: hostname", "m3: hostname"
       ]
     },
     "AdvancedConfig": {
